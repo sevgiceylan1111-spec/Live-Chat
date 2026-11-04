@@ -1,0 +1,199 @@
+:root {
+  font-family: "DM Sans", "Segoe UI", sans-serif;
+  color: #242638;
+  background: #f6f7fb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  --ink: #242638;
+  --muted: #898b9c;
+  --purple: #7658e9;
+  --line: #ececf2;
+  --paper: #fff;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  color: #ececf4;
+  background: #15151d;
+  --ink: #ececf4;
+  --muted: #a0a0b2;
+  --line: #30303e;
+  --paper: #20202b;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; background: #f6f7fb; color: var(--ink); }
+button, input, textarea { font: inherit; }
+button { cursor: pointer; }
+.page { min-height: 100vh; padding: 0 7.2%; }
+.topbar { height: 88px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e9eaf0; }
+.theme-toggle { display: grid; width: 36px; height: 36px; flex: 0 0 auto; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--paper); color: var(--ink); }
+.theme-toggle:hover { background: #f0edff; }
+.theme-toggle svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
+.sun-icon, [data-theme="dark"] .moon-icon { display: none; }
+[data-theme="dark"] .sun-icon { display: block; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--ink); font-family: Manrope, "Segoe UI", sans-serif; font-size: 19px; font-weight: 800; letter-spacing: -1px; text-decoration: none; }
+.brand-mark { display: block; width: 32px; height: 32px; }
+.privacy-note { color: var(--muted); font-size: 12px; }
+.auth-layout { min-height: calc(100vh - 89px); max-width: 1070px; margin: auto; display: grid; grid-template-columns: 1.1fr .8fr; align-items: center; gap: clamp(40px, 8vw, 112px); padding: 42px 0 72px; }
+.welcome { max-width: 540px; }
+.eyebrow { color: var(--purple); font-size: 10px; font-weight: 700; letter-spacing: 1.7px; }
+.online-dot { display: inline-block; flex: 0 0 auto; width: 7px; height: 7px; border-radius: 50%; background: #38c99a; box-shadow: 0 0 0 3px #38c99a1c; }
+.welcome .eyebrow { display: flex; align-items: center; gap: 9px; }
+.welcome h1 { margin: 22px 0 17px; font: 800 clamp(43px, 5.3vw, 66px)/1.08 Manrope, "Segoe UI", sans-serif; letter-spacing: -3.4px; }
+.welcome > p { max-width: 390px; margin: 0; color: #77798a; font-size: 16px; line-height: 1.75; }
+.welcome-stats { display: flex; align-items: center; gap: 9px; margin-top: 40px; color: #77798a; font-size: 12px; }
+.stat-icon { color: var(--purple); font-size: 18px; }
+.auth-card { width: 100%; max-width: 400px; padding: 30px; border: 1px solid #ececf3; border-radius: 18px; background: white; box-shadow: 0 14px 50px #3333440b; }
+.auth-tabs { display: flex; gap: 20px; border-bottom: 1px solid var(--line); }
+.auth-tab { padding: 2px 0 12px; border: 0; background: transparent; color: #a0a1ae; font-size: 13px; font-weight: 600; }
+.auth-tab.active { position: relative; color: var(--purple); }
+.auth-tab.active::after { position: absolute; right: 0; bottom: -1px; left: 0; height: 2px; background: var(--purple); content: ""; }
+.auth-card h2 { margin: 24px 0 4px; font: 700 22px Manrope, "Segoe UI", sans-serif; letter-spacing: -.7px; }
+.card-subtitle { margin: 0 0 23px; color: var(--muted); font-size: 12px; }
+label { display: block; margin: 15px 0 7px; color: #48495a; font-size: 11px; font-weight: 600; }
+input, textarea { width: 100%; border: 1px solid #e8e8ef; border-radius: 9px; outline: none; background: white; color: var(--ink); transition: border-color .15s, box-shadow .15s; }
+input { height: 43px; padding: 0 12px; }
+textarea { padding: 11px 12px; resize: vertical; }
+input:focus, textarea:focus { border-color: #9b87f1; box-shadow: 0 0 0 3px #7658e91c; }
+input::placeholder, textarea::placeholder { color: #b6b7c1; }
+.button { display: inline-flex; min-height: 39px; align-items: center; justify-content: center; gap: 10px; padding: 0 15px; border: 0; border-radius: 9px; font-size: 11px; font-weight: 600; transition: background .15s, transform .15s; }
+.button:active { transform: translateY(1px); }
+.button-primary { background: var(--purple); color: white; }
+.button-primary:hover { background: #6648db; }
+.full-width { width: 100%; margin-top: 8px; }
+.fine-print { margin: 17px 0 0; color: #a0a1ad; font-size: 10px; line-height: 1.65; text-align: center; }
+.form-error { min-height: 16px; margin: 8px 0; color: #cf4e62; font-size: 11px; }
+.hidden { display: none !important; }
+
+body.chat-active { overflow: hidden; }
+body.chat-active .page { height: 100vh; height: 100dvh; min-height: 0; padding: 0; }
+body.chat-active .topbar { position: fixed; top: 10px; left: 12px; z-index: 3; width: calc(100% - 24px); height: 36px; justify-content: space-between; border: 0; }
+body.chat-active .privacy-note { display: none; }
+.chat-layout { display: grid; grid-template-columns: 255px minmax(0, 1fr); width: 100%; height: 100vh; height: 100dvh; min-height: 0; max-width: none; margin: 0; overflow: hidden; border: 0; border-radius: 0; background: white; box-shadow: none; }
+.sidebar { display: flex; flex-direction: column; padding: 54px 17px 16px; border-right: 1px solid var(--line); background: #fdfdff; }
+.room-heading { display: flex; align-items: center; gap: 11px; padding: 4px 3px 22px; border-bottom: 1px solid var(--line); }
+.room-icon { display: grid; width: 35px; height: 35px; place-items: center; border-radius: 11px; background: #f0ecff; color: var(--purple); font-size: 20px; }
+.room-heading h2 { margin: 0 0 4px; font: 700 12px Manrope, "Segoe UI", sans-serif; }
+.room-heading p, .room-card small { margin: 0; color: var(--muted); font-size: 9px; }
+.room-card { display: flex; align-items: flex-start; gap: 10px; margin-top: 19px; padding: 13px 10px; border-radius: 10px; background: #f7f5ff; }
+.room-card .online-dot { margin-top: 3px; }
+.room-card strong, .signed-in strong { display: block; font-size: 10px; }
+.room-card small, .signed-in small { display: block; margin-top: 4px; }
+.sidebar-bottom { margin-top: auto; }
+.signed-in { display: flex; align-items: center; gap: 9px; padding: 12px 3px; border-top: 1px solid var(--line); }
+.avatar { width: 33px; height: 33px; flex: 0 0 auto; border-radius: 50%; object-fit: cover; background: #f0edff; }
+.sidebar-bottom > .button { width: 100%; justify-content: flex-start; }
+.button-quiet { background: transparent; color: #696b7b; }
+.button-quiet:hover { background: #f4f3fa; }
+.conversation { display: flex; min-width: 0; min-height: 0; flex-direction: column; }
+.conversation-header { display: flex; min-height: 54px; align-items: flex-start; justify-content: flex-end; padding: 8px 25px 8px 16px; border-bottom: 1px solid var(--line); }
+.conversation-header h1 { display: flex; align-items: center; gap: 11px; margin: 6px 0 0; font: 700 15px Manrope, "Segoe UI", sans-serif; letter-spacing: -.3px; }
+.conversation-header p { margin: 0; color: var(--muted); font-size: 10px; }
+.live-pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 6px; border-radius: 20px; background: #effaf6; color: #28a77c; font: 700 8px "DM Sans", sans-serif; letter-spacing: .5px; }
+.live-pill .online-dot { width: 5px; height: 5px; box-shadow: none; }
+.avatar-button { display: none; padding: 0; border: 0; border-radius: 50%; background: none; }
+.messages { display: flex; flex: 1; flex-direction: column; gap: 17px; overflow-y: auto; padding: 22px 26px; }
+.message { display: flex; align-items: flex-start; gap: 10px; }
+.message-content { min-width: 0; max-width: min(660px, 90%); }
+.message-meta { display: flex; align-items: baseline; gap: 8px; margin: 1px 0 5px; }
+.message-name { font-size: 10px; font-weight: 700; }
+.message-handle, .message-time { color: #a5a5b1; font-size: 9px; }
+.message-bio { overflow: hidden; color: #898b9c; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.message-time { margin-left: auto; white-space: nowrap; }
+.message-body { margin: 0; color: #555769; font-size: 12px; line-height: 1.65; overflow-wrap: anywhere; white-space: pre-wrap; }
+.empty-state { display: grid; flex: 1; align-content: center; justify-items: center; padding: 25px; color: var(--muted); text-align: center; }
+.empty-icon { display: grid; width: 44px; height: 44px; place-items: center; margin-bottom: 12px; border-radius: 15px; background: #f4f1ff; color: var(--purple); font-size: 23px; }
+.empty-state strong { margin-bottom: 6px; color: #4a4b5b; font: 700 13px Manrope, "Segoe UI", sans-serif; }
+.empty-state p { margin: 0; font-size: 11px; }
+.composer { margin: 0 19px 17px; padding: 10px 12px 8px; border: 1px solid #e8e8ef; border-radius: 12px; background: white; box-shadow: 0 5px 16px #30304a09; }
+.composer textarea { min-height: 38px; max-height: 130px; padding: 4px 3px; border: 0; border-radius: 0; box-shadow: none; font-size: 12px; }
+.composer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 3px; }
+.composer-bottom > span { color: #aaaab5; font-size: 9px; }
+.send-button { min-height: 32px; border-radius: 7px; font-size: 10px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
+
+.profile-dialog { width: min(440px, calc(100% - 32px)); padding: 0; border: 1px solid #ececf3; border-radius: 16px; background: white; box-shadow: 0 20px 70px #17172a30; }
+.profile-dialog::backdrop { background: #20203461; backdrop-filter: blur(2px); }
+.profile-form { padding: 25px; }
+.dialog-heading { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+.dialog-heading h2 { margin: 5px 0; font: 700 20px Manrope, "Segoe UI", sans-serif; }
+.close-button { width: 30px; height: 30px; border: 0; border-radius: 8px; background: #f5f5f8; color: #777; font-size: 20px; }
+.avatar-picker { display: flex; align-items: center; gap: 11px; margin: 17px 0 21px; }
+.avatar-large { width: 52px; height: 52px; }
+.upload-button { min-height: 33px; border: 1px solid var(--line); }
+.text-button { padding: 7px; border: 0; background: none; color: #b65362; font-size: 10px; }
+.label-hint { float: right; color: #a5a5af; font-weight: 400; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
+.toast { position: fixed; right: 22px; bottom: 20px; z-index: 5; padding: 11px 15px; transform: translateY(14px); border-radius: 9px; background: #28283b; color: white; font-size: 11px; opacity: 0; pointer-events: none; transition: .2s; }
+.toast.visible { transform: translateY(0); opacity: 1; }
+
+[data-theme="dark"] body { background: #15151d; }
+[data-theme="dark"] .topbar { border-color: var(--line); }
+[data-theme="dark"] .privacy-note,
+[data-theme="dark"] .welcome > p,
+[data-theme="dark"] .welcome-stats { color: #aaaaba; }
+[data-theme="dark"] .auth-card,
+[data-theme="dark"] .profile-dialog { border-color: var(--line); background: #20202b; color: var(--ink); }
+[data-theme="dark"] input,
+[data-theme="dark"] textarea { border-color: #3a3a49; background: #191922; color: var(--ink); }
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder { color: #777789; }
+[data-theme="dark"] label { color: #d3d3df; }
+[data-theme="dark"] .auth-tab { color: #9696a8; }
+[data-theme="dark"] .auth-tab.active { color: #a895ff; }
+[data-theme="dark"] .auth-tabs { border-color: var(--line); }
+[data-theme="dark"] .card-subtitle,
+[data-theme="dark"] .fine-print { color: #a0a0b2; }
+[data-theme="dark"] .sidebar { border-color: var(--line); background: #1b1b25; }
+[data-theme="dark"] .conversation-header,
+[data-theme="dark"] .signed-in { border-color: var(--line); }
+[data-theme="dark"] .conversation,
+[data-theme="dark"] .chat-layout { background: #181820; }
+[data-theme="dark"] .button-quiet { color: #c3c3d1; }
+[data-theme="dark"] .button-quiet:hover,
+[data-theme="dark"] .theme-toggle:hover { background: #30303e; }
+[data-theme="dark"] .messages { color: var(--ink); }
+[data-theme="dark"] .message-body { color: #d0d0dc; }
+[data-theme="dark"] .message-handle,
+[data-theme="dark"] .message-time,
+[data-theme="dark"] .message-bio,
+[data-theme="dark"] .composer-bottom > span,
+[data-theme="dark"] .label-hint { color: #9999aa; }
+[data-theme="dark"] .empty-state strong { color: #e0e0eb; }
+[data-theme="dark"] .empty-icon,
+[data-theme="dark"] .room-icon { background: #302a48; }
+[data-theme="dark"] .composer { border-color: #3a3a49; background: #20202b; box-shadow: 0 5px 16px #00000020; }
+[data-theme="dark"] .composer textarea { border-color: transparent; background: transparent; }
+[data-theme="dark"] .live-pill { background: #17362d; color: #69d7ad; }
+[data-theme="dark"] .close-button { background: #30303e; color: #dedee8; }
+[data-theme="dark"] .avatar { background: #302a48; }
+
+@media (max-width: 760px) {
+  .page { padding: 0 5%; }
+  .topbar { height: 70px; }
+  .privacy-note { font-size: 10px; }
+  .auth-layout { min-height: calc(100vh - 70px); grid-template-columns: 1fr; gap: 27px; justify-items: center; padding: 36px 0; }
+  .welcome { text-align: center; }
+  .welcome .eyebrow { justify-content: center; }
+  .welcome h1 { margin: 15px 0 9px; font-size: 42px; letter-spacing: -2px; }
+  .welcome > p { margin: auto; font-size: 13px; }
+  .welcome-stats { justify-content: center; margin-top: 16px; font-size: 10px; }
+  .auth-card { max-width: 440px; padding: 23px; }
+  .chat-layout { height: 100%; min-height: 0; margin: 0; grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .conversation-header { min-height: 54px; padding: 7px 14px 7px 10px; }
+  .avatar-button { display: block; }
+  .messages { padding: 18px 16px; }
+  .composer { margin: 0 10px 10px; }
+}
+@media (max-width: 420px) {
+  .privacy-note { max-width: 135px; text-align: right; line-height: 1.4; }
+  .conversation-header h1 { font-size: 13px; }
+  .live-pill { font-size: 7px; }
+  .composer-bottom > span { max-width: 160px; line-height: 1.5; }
+}

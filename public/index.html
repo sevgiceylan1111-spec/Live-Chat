@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f7fb">
+    <meta name="description" content="Meet new people and join the world in one welcoming live chat.">
+    <link rel="icon" href="/livechatty-icon.svg" type="image/svg+xml">
+    <title>Livechatty — Live Chat</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main class="page">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Livechatty home"><img class="brand-mark" src="/livechatty-icon.svg" alt=""> livechatty</a>
+        <span class="privacy-note">No email. No address. Just a username.</span>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
+          <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.1A8.5 8.5 0 0 1 8.9 3.8 8.6 8.6 0 1 0 20.2 15.1Z"/></svg>
+          <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
+        </button>
+      </header>
+
+      <section id="auth-view" class="auth-layout">
+        <div class="welcome">
+          <div class="eyebrow"><span class="online-dot"></span> ONE WORLD. ONE ROOM.</div>
+          <h1>Say hello to<br>the whole world.</h1>
+          <p>Drop in, meet someone new, and join the conversation. Everyone is welcome.</p>
+          <div class="welcome-stats"><span class="stat-icon">✳</span> A little more connected, one message at a time.</div>
+        </div>
+        <div class="auth-card">
+          <div class="auth-tabs" role="tablist" aria-label="Account options">
+            <button class="auth-tab active" id="login-tab" type="button" role="tab" aria-selected="true">Log in</button>
+            <button class="auth-tab" id="register-tab" type="button" role="tab" aria-selected="false">Create account</button>
+          </div>
+          <h2 id="auth-title">Welcome back</h2>
+          <p class="card-subtitle" id="auth-subtitle">Pick up where the conversation left off.</p>
+          <form id="auth-form">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" autocomplete="username" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]{3,20}" placeholder="your_username" required>
+            <div id="name-field" class="hidden">
+              <label for="display-name">Your name</label>
+              <input id="display-name" name="displayName" type="text" maxlength="40" autocomplete="nickname" placeholder="How should we call you?">
+            </div>
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" minlength="8" maxlength="200" placeholder="At least 8 characters" required>
+            <p class="form-error" id="auth-error" role="alert"></p>
+            <button class="button button-primary full-width" id="auth-submit" type="submit">Log in <span aria-hidden="true">→</span></button>
+          </form>
+          <p class="fine-print">Your username and password are all you need. We never ask for your address or email.</p>
+        </div>
+      </section>
+
+      <section id="chat-view" class="chat-layout hidden">
+        <aside class="sidebar">
+          <div class="sidebar-bottom">
+            <div class="signed-in"><img id="sidebar-avatar" class="avatar" alt=""><div><strong id="sidebar-name"></strong><small id="sidebar-username"></small></div></div>
+            <button id="edit-profile" class="button button-quiet" type="button">Edit profile</button>
+            <button id="logout" class="button button-quiet" type="button">Log out <span aria-hidden="true">↗</span></button>
+          </div>
+        </aside>
+        <section class="conversation" aria-label="Public chat">
+          <header class="conversation-header">
+            <button id="mobile-profile" class="avatar-button" type="button" aria-label="Edit profile"><img id="header-avatar" class="avatar" alt=""></button>
+          </header>
+          <div id="messages" class="messages" aria-live="polite" aria-label="Messages"></div>
+          <form id="message-form" class="composer">
+            <label class="sr-only" for="message-input">Write a message</label>
+            <textarea id="message-input" rows="1" maxlength="2000" placeholder="Write something for the world..." required></textarea>
+            <div class="composer-bottom"><span>Enter to send · Shift + Enter for a new line</span><button class="button button-primary send-button" type="submit">Send <span aria-hidden="true">↗</span></button></div>
+          </form>
+        </section>
+      </section>
+    </main>
+
+    <dialog id="profile-dialog" class="profile-dialog">
+      <form id="profile-form" class="profile-form">
+        <div class="dialog-heading"><div><span class="eyebrow">YOUR LITTLE CORNER</span><h2>Edit profile</h2></div><button id="close-profile" class="close-button" type="button" aria-label="Close">×</button></div>
+        <div class="avatar-picker"><img id="profile-avatar" class="avatar avatar-large" alt=""><label class="button button-quiet upload-button" for="avatar-file">Change photo<input id="avatar-file" type="file" accept="image/png,image/jpeg,image/webp" hidden></label><button id="remove-avatar" class="text-button" type="button">Remove</button></div>
+        <label for="profile-display-name">Name</label><input id="profile-display-name" maxlength="40" required>
+        <label for="profile-bio">Bio <span class="label-hint">Optional · 160 characters</span></label><textarea id="profile-bio" maxlength="160" rows="3" placeholder="A little about you..."></textarea>
+        <p id="profile-error" class="form-error" role="alert"></p>
+        <div class="dialog-actions"><button class="button button-quiet" id="cancel-profile" type="button">Cancel</button><button class="button button-primary" type="submit">Save changes</button></div>
+      </form>
+    </dialog>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
