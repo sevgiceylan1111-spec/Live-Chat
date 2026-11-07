@@ -8,9 +8,19 @@
   },
   "scripts": {
     "start": "node server.js",
+    "build:exe": "pkg . --sea --target node24-win-x64 --output dist/Livechatty.exe",
     "test": "node --test"
   },
+  "bin": "server.js",
   "dependencies": {
     "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@yao-pkg/pkg": "^6.25.0"
+  },
+  "pkg": {
+    "assets": [
+      "public/**/*"
+    ]
   }
 }

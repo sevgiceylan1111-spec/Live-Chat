@@ -1,7 +1,9 @@
 const crypto = require('node:crypto');
 const fs = require('node:fs');
 const http = require('node:http');
+const os = require('node:os');
 const path = require('node:path');
+const { spawn } = require('node:child_process');
 const { promisify } = require('node:util');
 const { DatabaseSync } = require('node:sqlite');
 const { WebSocketServer, WebSocket } = require('ws');
@@ -20,7 +22,13 @@ const MIME_TYPES = {
   '/livechatty-icon.svg': 'image/svg+xml',
 };
 
-function createChatServer({ databasePath = path.join(__dirname, '.data', 'chat.sqlite') } = {}) {
+function createChatServer({
+  databasePath = process.env.CHAT_DATABASE_PATH || (
+    process.pkg
+      ? path.join(os.homedir(), 'Livechatty', 'chat.sqlite')
+      : path.join(__dirname, '.data', 'chat.sqlite')
+  ),
+} = {}) {
   fs.mkdirSync(path.dirname(databasePath), { recursive: true });
   const db = new DatabaseSync(databasePath);
   db.exec(`
@@ -346,9 +354,31 @@ function sendJson(res, status, value) {
 if (require.main === module) {
   const { server } = createChatServer();
   const port = Number(process.env.PORT) || 3000;
-  server.listen(port, '0.0.0.0', () => {
-    console.log(`Livechatty is running on port ${port}`);
+  const host = process.env.HOST || (process.pkg ? '127.0.0.1' : '0.0.0.0');
+  server.listen(port, host, () => {
+    const url = `http://${host}:${port}`;
+    console.log(`Livechatty is running at ${url}`);
+    if (process.pkg) openBrowser(url);
   });
+}
+
+function openBrowser(url) {
+  const commands = {
+    win32: ['rundll32.exe', ['url.dll,FileProtocolHandler', url]],
+    darwin: ['open', [url]],
+    linux: ['xdg-open', [url]],
+  };
+  const [command, args] = commands[process.platform] || [];
+  if (!command) {
+    console.error(`Open ${url} in your browser.`);
+    return;
+  }
+  const browser = spawn(command, args, { detached: true, stdio: 'ignore' });
+  browser.once('error', (error) => {
+    console.error(`Could not open a browser: ${error.message}`);
+    console.error(`Open ${url} in your browser.`);
+  });
+  browser.unref();
 }
 
 module.exports = { createChatServer };
